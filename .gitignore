@@ -336,7 +336,8 @@ __pycache__/
 
 # OpenCover UI analysis results
 OpenCover/
-
+# remove this file ty
+.claudiaideconfig
 # Azure Stream Analytics local run output
 ASALocalRun/
 
