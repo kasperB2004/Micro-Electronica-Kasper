@@ -1,0 +1,124 @@
+﻿<UserControl x:Class="eindwerk.Components.SideBar"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:eindwerk.Components"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="80">
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    </UserControl.Resources> 
+    <ScrollViewer VerticalScrollBarVisibility="Auto"
+                  HorizontalScrollBarVisibility="Auto">
+        <Grid>
+            <Grid.Background>
+                <SolidColorBrush Color="#1a1726"></SolidColorBrush>
+            </Grid.Background>
+            <Grid Margin="5">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+
+                </Grid.RowDefinitions>
+                <Button Grid.Row="0"
+                        Style="{StaticResource MaterialDesignFloatingActionButton}"
+                        Background="{x:Null}"
+                        Margin="2"
+                        ToolTip="HomeScreen"
+                        Command="{Binding NavigateHomeCommand}"
+                        BorderBrush="#f49402">
+                      
+
+                    <materialDesign:PackIcon Kind="Home"
+                                             Foreground="White"
+                                             MinWidth="30"
+                                             MinHeight="30" />
+                </Button>
+                <Button Grid.Row="1"
+                        Style="{StaticResource MaterialDesignFloatingActionButton}"
+                        Background="{x:Null}"
+                        Margin="2"
+                        ToolTip="Learn"
+                        Command="{Binding NavigateLearnCommand}"
+                        BorderBrush="#f49402">
+                    <materialDesign:PackIcon Kind="Learn"
+                                             Foreground="White"
+                                             Width="30"
+                                             Height="30" />
+                </Button>
+                <Button Grid.Row="2"
+                        Style="{StaticResource MaterialDesignFloatingActionButton}"
+                        Background="{x:Null}"
+                        Margin="2"
+                        ToolTip="Manage Account"
+                        Command="{Binding NavigateAccountCommand}"
+                        BorderBrush="#f49402">
+                    <materialDesign:PackIcon Kind="Account"
+                                             Foreground="White"
+                                             Width="30"
+                                             Height="30" />
+                </Button>
+                <!--Buttons for teacher-->
+                <Button Grid.Row="3"
+                        Margin="2"
+                        ToolTip="Manage Content"
+                        Style="{StaticResource MaterialDesignFloatingActionButton}"
+                        Background="{x:Null}"
+                        Visibility="{Binding IsTeacher, Converter={StaticResource BooleanToVisibilityConverter}}"
+                        BorderBrush="#f49402">
+                    <materialDesign:PackIcon Kind="Book"
+                                             Foreground="White"
+                                             Width="30"
+                                             Height="30" />
+                </Button>
+                <Button Grid.Row="4"
+                        Style="{StaticResource MaterialDesignFloatingActionButton}"
+                        Background="{x:Null}"
+                        Visibility="{Binding IsTeacher, Converter={StaticResource BooleanToVisibilityConverter}}"
+                        Margin="2"
+                        ToolTip="Manage Users"
+                        Command="{Binding NavigateAccountCommand}"
+                        BorderBrush="#f49402">
+                    <materialDesign:PackIcon Kind="AccountBox"
+                                             Foreground="White"
+                                             Width="30"
+                                             Height="30" />
+                </Button>
+                <!--Button for logging out / quiting   -->
+                <Button Grid.Row="5"
+                        Style="{StaticResource MaterialDesignFloatingActionButton}"
+                        Background="{x:Null}"
+                        Margin="2"
+                        ToolTip="Log out"
+                        Command="{Binding NavigateLogOutCommand}"
+                        BorderBrush="#f49402">
+                    <materialDesign:PackIcon Kind="Logout"
+                                             Foreground="White"
+                                             Width="30"
+                                             Height="30" />
+                </Button>
+                <Button Grid.Row="6"
+                        Style="{StaticResource MaterialDesignFloatingActionButton}"
+                        Background="{x:Null}"
+                        Margin="2"
+                        ToolTip="Close"
+                        Command="{Binding CloseCommand}"
+                        BorderBrush="#f49402">
+                    <materialDesign:PackIcon Kind="Close"
+                                             Foreground="White"
+                                             Width="30"
+                                             Height="30" />
+                </Button>
+            </Grid>
+        </Grid>
+    </ScrollViewer>
+
+</UserControl>
