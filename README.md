@@ -1,7 +1,7 @@
 # Micro-Electronica-Kasper
 Eindwerk 2021 - 2022 voor het vak micro electronica te studeren
 
-Todo 
+##Todo 
 
 - [ ] Add database using efcore and ms sql
 - [ ] Add Account Store
@@ -9,3 +9,6 @@ Todo
 - [ ] Comments!!!!!!!!!!!!!
 - [ ] Add Login Command
 - [ ] Study micro electronica :)
+- [ ] password reset
+- [ ] change password
+- [ ]  update Todo List
