@@ -10,5 +10,5 @@ Eindwerk 2021 - 2022 voor het vak micro electronica te studeren
 - [ ] Add Login Command
 - [ ] Study micro electronica :)
 - [ ] password reset
-- [ ] change password
+- [x] change password
 - [ ]  update Todo List
