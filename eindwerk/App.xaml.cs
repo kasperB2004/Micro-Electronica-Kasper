@@ -1,4 +1,5 @@
-﻿using eindwerk.Services;
+﻿using eindwerk.DB;
+using eindwerk.Services;
 using eindwerk.Stores;
 using eindwerk.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
@@ -9,6 +10,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using eindwerk.Encryption;
 
 namespace eindwerk
 {
@@ -18,10 +20,17 @@ namespace eindwerk
     public partial class App : Application
     {
         private readonly NavigationStore _NavigationStore;
-
+        private readonly AccountStore _AccountStore;
         public App()
         {
             _NavigationStore = new NavigationStore();
+            _AccountStore = new AccountStore();
+            using(var db = new Database())
+            {
+                db.Database.EnsureDeleted();
+                db.Database.EnsureCreated();
+            }
+            var check = Hashing.verify(hash, "test");
         }
     
         protected override void OnStartup(StartupEventArgs e)
@@ -41,11 +50,11 @@ namespace eindwerk
         }
         private SideBarModel CreateSideBarModel()
         {
-           return new SideBarModel(CreatehomeNavigationService(), CreateLearnNavigationService(), CreateAccountNavigationService(), CreateLoginNavigationService());
+           return new SideBarModel(_AccountStore,CreatehomeNavigationService(), CreateLearnNavigationService(), CreateAccountNavigationService(), CreateLoginNavigationService());
         }
         private INavigationService<LoginViewModel> CreateLoginNavigationService()
         {
-            return new NavigationService<LoginViewModel>(_NavigationStore, () => new LoginViewModel(CreatehomeNavigationService()));
+            return new NavigationService<LoginViewModel>(_NavigationStore, () => new LoginViewModel(_AccountStore,CreatehomeNavigationService()));
         }
 
         private INavigationService<AccountPageModel> CreateAccountNavigationService()

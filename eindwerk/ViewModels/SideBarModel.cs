@@ -1,5 +1,6 @@
 ﻿using eindwerk.Commands;
 using eindwerk.Services;
+using eindwerk.Stores;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,8 @@ namespace eindwerk.ViewModels
 {
     public class SideBarModel : ViewModelBase
     {
-        public bool IsTeacher { get; }
+        private readonly AccountStore _accountStore;
+        public bool IsTeacher => _accountStore.IsTeacher;
         public ICommand NavigateHomeCommand{get;}
         public ICommand NavigateLearnCommand { get; }
         public ICommand NavigateAccountCommand { get; }
@@ -19,9 +21,9 @@ namespace eindwerk.ViewModels
         public ICommand CloseCommand { get; }
 
 
-        public SideBarModel(INavigationService<HomePageModel> homeNavigationService, INavigationService<LearnPageModel> LearnNavigationService,INavigationService<AccountPageModel> AccountNavigationService, INavigationService<LoginViewModel> LoginNavigationService)
+        public SideBarModel(AccountStore AccountStore, INavigationService<HomePageModel> homeNavigationService, INavigationService<LearnPageModel> LearnNavigationService,INavigationService<AccountPageModel> AccountNavigationService, INavigationService<LoginViewModel> LoginNavigationService)
         {
-            IsTeacher = true;
+            _accountStore = AccountStore;
             NavigateHomeCommand = new NavigateCommand<HomePageModel>(homeNavigationService);
             NavigateLearnCommand = new NavigateCommand<LearnPageModel>(LearnNavigationService);
             NavigateAccountCommand = new NavigateCommand<AccountPageModel>(AccountNavigationService);

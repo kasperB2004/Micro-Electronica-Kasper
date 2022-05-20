@@ -1,4 +1,5 @@
-﻿using eindwerk.Services;
+﻿using eindwerk.Models;
+using eindwerk.Services;
 using eindwerk.Stores;
 using eindwerk.ViewModels;
 using System;
@@ -12,20 +13,31 @@ namespace eindwerk.Commands
 {
     public class LoginCommand : CommandBase
     {
-        private readonly LoginViewModel _loginViewModel;
+        private readonly LoginViewModel _viewModel;
         private readonly INavigationService<HomePageModel> _navigationService;
+        private AccountStore _AccountStore;
 
-        public LoginCommand(LoginViewModel loginViewModel, INavigationService<HomePageModel> navigationService)
-        {
-            _loginViewModel = loginViewModel;
+        public LoginCommand(LoginViewModel viewModel, INavigationService<HomePageModel> navigationService, AccountStore accountStore)
+        { 
+            _viewModel = viewModel;
+            _AccountStore = accountStore;
             _navigationService = navigationService;
         }
 
         public override void Execute(object parameter)
         {
             //logic for logging in can go hoere
-           
-            MessageBox.Show($"logging user in with username {_loginViewModel.Username} and with password {_loginViewModel.Password} ");
+            Account account = new Account(){
+                UserName = _viewModel.Username,
+                Password = _viewModel.Password,
+                Email = $"{_viewModel.Username}@test.com",
+                IsTeacher = _viewModel.Username == "greg" ? true : false
+                
+            };
+
+            _AccountStore.CurrentAccount = account;
+         
+            MessageBox.Show($"logging user in with username {_viewModel.Username} and with password {_viewModel.Password} ");
 
             _navigationService.Navigate();
 
