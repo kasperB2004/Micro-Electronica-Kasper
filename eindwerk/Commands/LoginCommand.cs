@@ -1,4 +1,6 @@
-﻿using eindwerk.Models;
+﻿using eindwerk.DB;
+using eindwerk.Encryption;
+using eindwerk.Models;
 using eindwerk.Services;
 using eindwerk.Stores;
 using eindwerk.ViewModels;
@@ -26,21 +28,29 @@ namespace eindwerk.Commands
 
         public override void Execute(object parameter)
         {
-            //logic for logging in can go hoere
-            Account account = new Account(){
-                UserName = _viewModel.Username,
-                Password = _viewModel.Password,
-                Email = $"{_viewModel.Username}@test.com",
-                IsTeacher = _viewModel.Username == "greg" ? true : false
-                
-            };
+            using (var db = new Database())
+            {
+                var account = db.Accounts.AsQueryable().Where(u => u.UserName == _viewModel.Username.ToLower() || u.Email == _viewModel.Username.ToLower()).FirstOrDefault();
+                if(account == null)
+                {
+                    MessageBox.Show($"Account not found, try again ","error",MessageBoxButton.OK,MessageBoxImage.Error);
 
-            _AccountStore.CurrentAccount = account;
-         
-            MessageBox.Show($"logging user in with username {_viewModel.Username} and with password {_viewModel.Password} ");
+                    return;
+                }
+                var correctpassword = Hashing.verify(account.Password,_viewModel.Password);
+                if (correctpassword)
+                {
+                    _AccountStore.CurrentAccount = account;
+                    MessageBox.Show($"logging user in");
+                    _navigationService.Navigate();
 
-            _navigationService.Navigate();
-
+                }
+                else
+                {
+                    MessageBox.Show($"Wrong password, try again ", "error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+            }
         }
     }
 }

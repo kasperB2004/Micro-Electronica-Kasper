@@ -35,7 +35,7 @@ namespace eindwerk.Encryption
                 TimeCost = 10,
                 MemoryCost = 32768,
                 Lanes = 5,
-                Threads = Environment.ProcessorCount, // higher than "Lanes" doesn't help (or hurt)
+                Threads = 1, // higher than "Lanes" doesn't help (or hurt)
                 Password = Encoding.UTF8.GetBytes(password),
                 Salt = GenerateSalt(), // >= 8 bytes if not null
                 HashLength = 20 // >= 4
@@ -53,7 +53,7 @@ namespace eindwerk.Encryption
                 TimeCost = 10,
                 MemoryCost = 32768,
                 Lanes = 5,
-                Threads = Environment.ProcessorCount, // higher than "Lanes" doesn't help (or hurt)
+                Threads = 1, // higher than "Lanes" doesn't help (or hurt)
                 Password = Encoding.UTF8.GetBytes(password),
                 Salt = Salt, // >= 8 bytes if not null
                 HashLength = 20 // >= 4

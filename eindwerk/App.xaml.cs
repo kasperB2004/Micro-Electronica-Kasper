@@ -10,6 +10,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using eindwerk.Models;
 using eindwerk.Encryption;
 
 namespace eindwerk
@@ -29,8 +30,25 @@ namespace eindwerk
             {
                 db.Database.EnsureDeleted();
                 db.Database.EnsureCreated();
+                db.Add(new Account
+                {
+                    UserName = "langedock",
+                    Email = "langedock@guldensporencollege.be",
+                    IsTeacher = true,
+                    Password = Hashing.hash("5555")
+
+                });
+                db.SaveChanges();
+                db.Add(new Account
+                {
+                    UserName = "kasper",
+                    Email = "kasper@guldensporencollege.be",
+                    IsTeacher = false,
+                    Password = Hashing.hash("6666")
+
+                });
+                db.SaveChanges();
             }
-            var check = Hashing.verify(hash, "test");
         }
     
         protected override void OnStartup(StartupEventArgs e)
