@@ -14,20 +14,25 @@ namespace eindwerk.ViewModels
     {
         private readonly AccountStore _accountStore;
         public bool IsTeacher => _accountStore.IsTeacher;
+
+        public bool IsAdmin => _accountStore.IsAdmin;
         public ICommand NavigateHomeCommand{get;}
         public ICommand NavigateLearnCommand { get; }
         public ICommand NavigateAccountCommand { get; }
         public ICommand NavigateLogOutCommand { get; }
         public ICommand CloseCommand { get; }
 
+        public ICommand NavigateAccountManagementCommand { get; }
 
-        public SideBarModel(AccountStore AccountStore, INavigationService<HomePageModel> homeNavigationService, INavigationService<LearnPageModel> LearnNavigationService,INavigationService<AccountPageModel> AccountNavigationService, INavigationService<LoginViewModel> LoginNavigationService)
+
+        public SideBarModel(AccountStore AccountStore, INavigationService<HomePageModel> homeNavigationService, INavigationService<LearnPageModel> LearnNavigationService,INavigationService<AccountPageModel> AccountNavigationService, INavigationService<LoginViewModel> LoginNavigationService, INavigationService<AccountManagementViewModel> AccountManagementnavigationService)
         {
             _accountStore = AccountStore;
             NavigateHomeCommand = new NavigateCommand<HomePageModel>(homeNavigationService);
             NavigateLearnCommand = new NavigateCommand<LearnPageModel>(LearnNavigationService);
             NavigateAccountCommand = new NavigateCommand<AccountPageModel>(AccountNavigationService);
             NavigateLogOutCommand = new NavigateCommand<LoginViewModel>(LoginNavigationService);
+            NavigateAccountManagementCommand = new NavigateCommand<AccountManagementViewModel>(AccountManagementnavigationService);
            CloseCommand = new CloseCommand();
         }
     }

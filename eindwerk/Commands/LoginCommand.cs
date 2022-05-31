@@ -28,9 +28,16 @@ namespace eindwerk.Commands
 
         public override void Execute(object parameter)
         {
+
+            if(_viewModel.Username == "" ||_viewModel.Password == "" )
+            {
+                MessageBox.Show($"Please fill in all input boxes ", "error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
             using (var db = new Database())
             {
-                var account = db.Accounts.AsQueryable().Where(u => u.UserName == _viewModel.Username.ToLower() || u.Email == _viewModel.Username.ToLower()).FirstOrDefault();
+                var account = db.Accounts.AsQueryable().Where(u => u.UserName.ToLower() == _viewModel.Username.ToLower() || u.Email.ToLower() == _viewModel.Username.ToLower()).FirstOrDefault();
                 if(account == null)
                 {
                     MessageBox.Show($"Account not found, try again ","error",MessageBoxButton.OK,MessageBoxImage.Error);

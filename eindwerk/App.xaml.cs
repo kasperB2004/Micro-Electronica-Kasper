@@ -32,19 +32,32 @@ namespace eindwerk
                 db.Database.EnsureCreated();
                 db.Add(new Account
                 {
-                    UserName = "langedock",
+                    UserName = "Admin",
+                    Email = "admin@guldensporencollege.be",
+                    AccountTypeId = 2,
+                    Password = Hashing.hash("1")
+
+                });
+                db.Add(new Account
+                {
+                    UserName = "Langedock",
                     Email = "langedock@guldensporencollege.be",
-                    IsTeacher = true,
-                    Password = Hashing.hash("5555")
+                    AccountTypeId = 1,
+                    Password = Hashing.hash("1")
 
                 });
                 db.SaveChanges();
-                db.Add(new Account
+                Class Class = new Class()
                 {
-                    UserName = "kasper",
+                    ClassName = "5IICT"
+                };
+                db.AddRange(new Account
+                {
+                    UserName = "Kasper",
                     Email = "kasper@guldensporencollege.be",
-                    IsTeacher = false,
-                    Password = Hashing.hash("6666")
+                    Class = Class,
+                    AccountTypeId = 0,
+                    Password = Hashing.hash("1")
 
                 });
                 db.SaveChanges();
@@ -68,7 +81,7 @@ namespace eindwerk
         }
         private SideBarModel CreateSideBarModel()
         {
-           return new SideBarModel(_AccountStore,CreatehomeNavigationService(), CreateLearnNavigationService(), CreateAccountNavigationService(), CreateLoginNavigationService());
+           return new SideBarModel(_AccountStore,CreatehomeNavigationService(), CreateLearnNavigationService(), CreateAccountNavigationService(), CreateLoginNavigationService(), CreateAccountManagementNavigationService());
         }
         private INavigationService<LoginViewModel> CreateLoginNavigationService()
         {
@@ -88,6 +101,10 @@ namespace eindwerk
         private INavigationService<HomePageModel> CreatehomeNavigationService()
         {
             return new LayoutNavigationService<HomePageModel>(_NavigationStore, () => new HomePageModel(_NavigationStore), CreateSideBarModel);
+        }
+        private INavigationService<AccountManagementViewModel> CreateAccountManagementNavigationService()
+        {
+            return new LayoutNavigationService<AccountManagementViewModel>(_NavigationStore, () => new AccountManagementViewModel(_NavigationStore), CreateSideBarModel);
         }
 
     }

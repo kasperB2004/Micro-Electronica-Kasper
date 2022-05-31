@@ -20,7 +20,9 @@ namespace eindwerk.Stores
             }
         }
 
-        public bool IsTeacher => CurrentAccount.IsTeacher;
+        public bool IsTeacher => CurrentAccount.AccountTypeId >0;
+
+        public bool IsAdmin => CurrentAccount.AccountTypeId == 2;
 
         public event Action CurrentAccountChanged;
 
