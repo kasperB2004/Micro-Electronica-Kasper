@@ -9,7 +9,7 @@ using System.Windows.Navigation;
 
 namespace eindwerk.Services
 {
-    public class NavigationService<TviewModel> : INavigationService<TviewModel> where TviewModel : ViewModelBase
+    public class NavigationService<TviewModel> : INavigationService where TviewModel : ViewModelBase
     {
         private readonly NavigationStore _navigationStore;
         private readonly Func<TviewModel> _CreateViewModel;

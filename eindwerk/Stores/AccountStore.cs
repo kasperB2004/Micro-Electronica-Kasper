@@ -10,19 +10,21 @@ namespace eindwerk.Stores
     public class AccountStore
     {
         private Account _currentAccount;
+
+        private Permission _permission;
         public Account CurrentAccount
         {
             get => _currentAccount;
             set
             {
                 _currentAccount = value;
+                _permission = value.Permission;
                 CurrentAccountChanged?.Invoke();
             }
         }
 
-        public bool IsTeacher => CurrentAccount.AccountTypeId >0;
-
-        public bool IsAdmin => CurrentAccount.AccountTypeId == 2;
+        public bool ViewContentManagent => _permission.ViewContentManagent;
+        public bool ViewAccountManagent => _permission.ViewAccountManagent;
 
         public event Action CurrentAccountChanged;
 

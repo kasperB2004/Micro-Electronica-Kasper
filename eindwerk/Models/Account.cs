@@ -14,19 +14,6 @@ namespace eindwerk.Models
         public string UserName { get; set; }
         public string Password { get; set; }
         public Class? Class { get; set; }
-        public int AccountTypeId { get; set; }
-        [NotMapped]
-
-        public AccountType AccountType
-        {
-            get => (AccountType)AccountTypeId;
-            set => AccountTypeId = (int)value;
-        }
-    }
-    public enum AccountType
-    {
-        Student =0,
-        Teacher = 1,
-        Admin = 2,
+        public Permission Permission { get; set; }
     }
 }

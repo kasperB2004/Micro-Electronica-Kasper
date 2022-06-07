@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace eindwerk.Services
 {
-    public class LayoutNavigationService<TviewModel> : INavigationService<TviewModel> where TviewModel : ViewModelBase
+    public class LayoutNavigationService<TviewModel> : INavigationService where TviewModel : ViewModelBase
     {
         private readonly NavigationStore _navigationStore;
         private readonly Func<SideBarModel> _sidebarModel;

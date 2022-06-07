@@ -1,0 +1,156 @@
+﻿<UserControl xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:eindwerk.Pages"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             x:Class="eindwerk.Pages.AddAccount"
+             mc:Ignorable="d"
+             d:DesignHeight="450"
+             d:DesignWidth="800">
+
+    <Grid  Background="#1a1726">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+        <Grid Margin="5"
+              Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="auto" />
+
+            </Grid.ColumnDefinitions>
+            <Label  Width="75"
+                    Grid.Column="0"
+                    Foreground="White"
+                    Content="Name :" />
+            <TextBox Background="#100E17"
+                     Foreground="White"
+                     Grid.Column="1"
+                     Text="{Binding Name}"
+                     BorderBrush="#2e287e"
+                     MaxWidth="200"
+                     MinWidth="200"
+                     BorderThickness="1" />
+        </Grid>
+        <Grid Margin="5"
+              Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="auto" />
+
+            </Grid.ColumnDefinitions>
+            <Label Width="75"
+                   Grid.Column="0"
+                   Foreground="White"
+                   Content="Email :" />
+            <TextBox Background="#100E17"
+                     Foreground="White"
+                     Grid.Column="1"
+                     BorderBrush="#2e287e"
+                     Width="200"
+                     MaxWidth="200"
+                     Text="{Binding Email}"
+                     BorderThickness="1" />
+        </Grid>
+        <Grid Margin="5"
+              Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="auto" />
+
+            </Grid.ColumnDefinitions>
+            <Label Width="75"
+                   Grid.Column="0"
+                   Foreground="White"
+                   Content="Class :" />
+            <ComboBox Background="#100E17"
+                      Foreground="White"
+                      IsEditable="True"
+                      IsReadOnly="True"
+                      Grid.Column="1"
+                      BorderBrush="#2e287e"
+                      Width="200"
+                      MaxWidth="200"
+                      ItemsSource="{Binding ClassList}"
+                      SelectedItem="{Binding ChosenClass}"
+                      BorderThickness="1"
+                      DisplayMemberPath="ClassName">
+                <ComboBox.ItemContainerStyle>
+                    <Style TargetType="{x:Type ComboBoxItem}">
+                        <Setter Property="Background"
+                                Value="#100E17" />
+                        <Setter Property="Foreground"
+                                Value="White" />
+                    </Style>
+                </ComboBox.ItemContainerStyle>
+            </ComboBox>
+        </Grid>
+        <Grid Margin="5"
+              Grid.Row="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="auto" />
+
+            </Grid.ColumnDefinitions>
+            <Label Width="75"
+                   Grid.Column="0"
+                   Foreground="White"
+                   Content="Permission :" />
+            <ComboBox Background="#100E17"
+                      Foreground="White"
+                      IsEditable="True"
+                      IsReadOnly="True"
+                      Grid.Column="1"
+                      BorderBrush="#2e287e"
+                      MaxWidth="200"
+                      Width="200"
+                      ItemsSource="{Binding PermissionsList}"
+                      SelectedItem="{Binding Chosenpermission}"
+                      BorderThickness="1"
+                      DisplayMemberPath="Name">
+                <ComboBox.ItemContainerStyle>
+                    <Style TargetType="{x:Type ComboBoxItem}">
+                        <Setter Property="Background"
+                                Value="#100E17" />
+                        <Setter Property="Foreground"
+                                Value="White" />
+                    </Style>
+                </ComboBox.ItemContainerStyle>
+            </ComboBox>
+        </Grid>
+        <Grid Margin="5"
+              Width="275"
+              HorizontalAlignment="Left"
+              Grid.Row="4">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*"  />
+
+            </Grid.ColumnDefinitions>
+            <Button Margin="5" Foreground="White"
+                    Width="100"
+                    Content="Add"
+                    Grid.Column="0"
+                    BorderBrush="#2e287e"
+                    BorderThickness="1"
+                    Style="{StaticResource MaterialDesignFlatButton}"
+                    Command="{Binding saveNewAccount}"
+                    HorizontalAlignment="Left"/>
+            <Button Margin="5" 
+                Foreground="White"
+                    Width="100"
+                    Content="Close"
+                    BorderBrush="#2e287e"
+                    BorderThickness="1"
+                    Style="{StaticResource MaterialDesignFlatButton}"
+                    Command="{Binding close}"
+                    Grid.Column="1" HorizontalAlignment="Right" />
+        </Grid>
+
+    </Grid>
+</UserControl>

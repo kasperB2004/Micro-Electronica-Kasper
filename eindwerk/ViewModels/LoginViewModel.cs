@@ -45,7 +45,7 @@ namespace eindwerk.ViewModels
         }
 
 
-        public LoginViewModel(AccountStore AccountStore, INavigationService<HomePageModel> _HomepageModel)
+        public LoginViewModel(AccountStore AccountStore, INavigationService _HomepageModel)
         {                
             LogInCommand = new LoginCommand(this, _HomepageModel,AccountStore);
             CloseCommand = new CloseCommand();

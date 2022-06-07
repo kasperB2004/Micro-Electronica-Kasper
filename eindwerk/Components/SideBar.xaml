@@ -72,7 +72,7 @@
                         ToolTip="Manage Content"
                         Style="{StaticResource MaterialDesignFloatingActionButton}"
                         Background="{x:Null}"
-                        Visibility="{Binding IsTeacher, Converter={StaticResource BooleanToVisibilityConverter}}"
+                        Visibility="{Binding ViewContentManagent, Converter={StaticResource BooleanToVisibilityConverter}}"
                         BorderBrush="#f49402">
                     <materialDesign:PackIcon Kind="Book"
                                              Foreground="White"
@@ -82,7 +82,7 @@
                 <Button Grid.Row="4"
                         Style="{StaticResource MaterialDesignFloatingActionButton}"
                         Background="{x:Null}"
-                        Visibility="{Binding IsAdmin, Converter={StaticResource BooleanToVisibilityConverter}}"
+                        Visibility="{Binding ViewAccountManagent, Converter={StaticResource BooleanToVisibilityConverter}}"
                         Margin="2"
                         ToolTip="Manage Users"
                         Command="{Binding NavigateAccountManagementCommand}"

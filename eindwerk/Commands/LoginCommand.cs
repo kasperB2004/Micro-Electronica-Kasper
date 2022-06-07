@@ -4,6 +4,7 @@ using eindwerk.Models;
 using eindwerk.Services;
 using eindwerk.Stores;
 using eindwerk.ViewModels;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,10 +17,10 @@ namespace eindwerk.Commands
     public class LoginCommand : CommandBase
     {
         private readonly LoginViewModel _viewModel;
-        private readonly INavigationService<HomePageModel> _navigationService;
+        private readonly INavigationService _navigationService;
         private AccountStore _AccountStore;
 
-        public LoginCommand(LoginViewModel viewModel, INavigationService<HomePageModel> navigationService, AccountStore accountStore)
+        public LoginCommand(LoginViewModel viewModel, INavigationService navigationService, AccountStore accountStore)
         { 
             _viewModel = viewModel;
             _AccountStore = accountStore;
@@ -37,7 +38,7 @@ namespace eindwerk.Commands
 
             using (var db = new Database())
             {
-                var account = db.Accounts.AsQueryable().Where(u => u.UserName.ToLower() == _viewModel.Username.ToLower() || u.Email.ToLower() == _viewModel.Username.ToLower()).FirstOrDefault();
+                var account = db.Accounts.AsQueryable().Where(u => u.Email.ToLower() == _viewModel.Username.ToLower()).Include(p => p.Permission).FirstOrDefault();
                 if(account == null)
                 {
                     MessageBox.Show($"Account not found, try again ","error",MessageBoxButton.OK,MessageBoxImage.Error);
@@ -48,7 +49,6 @@ namespace eindwerk.Commands
                 if (correctpassword)
                 {
                     _AccountStore.CurrentAccount = account;
-                    MessageBox.Show($"logging user in");
                     _navigationService.Navigate();
 
                 }

@@ -16,6 +16,10 @@ namespace eindwerk.DB
         //specifiying tables
         public virtual DbSet<Account> Accounts { get; set; }
 
+        public virtual DbSet<Class> Class { get; set; }
+
+        public virtual DbSet<Permission> Permissions { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
 

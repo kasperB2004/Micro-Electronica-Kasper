@@ -21,28 +21,51 @@ namespace eindwerk
     public partial class App : Application
     {
         private readonly NavigationStore _NavigationStore;
+        private readonly ModalNavigationStore _ModalNavigationStore;
         private readonly AccountStore _AccountStore;
         public App()
         {
+            _ModalNavigationStore = new ModalNavigationStore();
             _NavigationStore = new NavigationStore();
             _AccountStore = new AccountStore();
             using(var db = new Database())
             {
+
                 db.Database.EnsureDeleted();
                 db.Database.EnsureCreated();
-                db.Add(new Account
+                Class Class2 = new Class()
+                {
+                    ClassName = "NONSTUDENT"
+                };
+                var admin = new Permission(){
+                    Name = "admin",
+                    ViewAccountManagent = true,
+                    ViewContentManagent = true,
+                };
+                var Teacher = new Permission(){
+                    Name = "teacher",
+                    ViewAccountManagent = false,
+                    ViewContentManagent = true,
+                }; var student = new Permission(){
+                    Name = "student",
+                    ViewAccountManagent = false,
+                    ViewContentManagent = false,
+                };
+                db.AddRange(new Account
                 {
                     UserName = "Admin",
-                    Email = "admin@guldensporencollege.be",
-                    AccountTypeId = 2,
+                    Email = "admin@guldensporencollege.be",     
+                    Permission = admin,
+                    Class = Class2,
                     Password = Hashing.hash("1")
 
                 });
-                db.Add(new Account
+                db.AddRange(new Account
                 {
                     UserName = "Langedock",
                     Email = "langedock@guldensporencollege.be",
-                    AccountTypeId = 1,
+                    Permission = Teacher,
+                    Class = Class2,
                     Password = Hashing.hash("1")
 
                 });
@@ -56,7 +79,7 @@ namespace eindwerk
                     UserName = "Kasper",
                     Email = "kasper@guldensporencollege.be",
                     Class = Class,
-                    AccountTypeId = 0,
+                    Permission = student,
                     Password = Hashing.hash("1")
 
                 });
@@ -66,14 +89,14 @@ namespace eindwerk
     
         protected override void OnStartup(StartupEventArgs e)
         {
-            INavigationService<LoginViewModel> _LoginNavigationService = CreateLoginNavigationService();
+            INavigationService _LoginNavigationService = CreateLoginNavigationService();
 
             _LoginNavigationService.Navigate();
            
 
             MainWindow = new MainWindow()
             {
-                DataContext = new MainViewModel(_NavigationStore)
+                DataContext = new MainViewModel(_NavigationStore,_ModalNavigationStore)
             };
             MainWindow.Show();
 
@@ -83,28 +106,37 @@ namespace eindwerk
         {
            return new SideBarModel(_AccountStore,CreatehomeNavigationService(), CreateLearnNavigationService(), CreateAccountNavigationService(), CreateLoginNavigationService(), CreateAccountManagementNavigationService());
         }
-        private INavigationService<LoginViewModel> CreateLoginNavigationService()
+        private INavigationService CreateLoginNavigationService()
         {
             return new NavigationService<LoginViewModel>(_NavigationStore, () => new LoginViewModel(_AccountStore,CreatehomeNavigationService()));
         }
 
-        private INavigationService<AccountPageModel> CreateAccountNavigationService()
+        private INavigationService CreateAccountNavigationService()
         {
             return new LayoutNavigationService<AccountPageModel>(_NavigationStore, () => new AccountPageModel(_NavigationStore), CreateSideBarModel);
         }
 
-        private INavigationService<LearnPageModel> CreateLearnNavigationService()
+        private INavigationService CreateLearnNavigationService()
         {
             return new LayoutNavigationService<LearnPageModel>(_NavigationStore, () => new LearnPageModel(_NavigationStore), CreateSideBarModel);
         }
 
-        private INavigationService<HomePageModel> CreatehomeNavigationService()
+        private INavigationService CreatehomeNavigationService()
         {
             return new LayoutNavigationService<HomePageModel>(_NavigationStore, () => new HomePageModel(_NavigationStore), CreateSideBarModel);
         }
-        private INavigationService<AccountManagementViewModel> CreateAccountManagementNavigationService()
+        public INavigationService CreateCloseModalNavigationService()
         {
-            return new LayoutNavigationService<AccountManagementViewModel>(_NavigationStore, () => new AccountManagementViewModel(_NavigationStore), CreateSideBarModel);
+            return new CloseModalNavigationService(_ModalNavigationStore);
+        }
+        public INavigationService CreateAddAccountNavigationService()
+        {
+            return new ModalNavigationService<AddAccountViewModel>(_ModalNavigationStore, () => new AddAccountViewModel(CreateCloseModalNavigationService(),new CompositeNavigationService(CreateCloseModalNavigationService(), CreateAccountManagementNavigationService())));
+        }
+
+        private INavigationService CreateAccountManagementNavigationService()
+        {
+            return new LayoutNavigationService<AccountManagementViewModel>(_NavigationStore, () => new AccountManagementViewModel(_NavigationStore,CreateAddAccountNavigationService()), CreateSideBarModel);
         }
 
     }

@@ -36,6 +36,7 @@
                     Margin="10"
                     ToolTip="Add user"
                     BorderBrush="#f49402"
+                    Command="{Binding NavigateAddAccountCommand}"
                     HorizontalAlignment="Left">
 
                 <materialDesign:PackIcon Margin="5"
@@ -121,7 +122,7 @@
                 <DataGridTextColumn Header="Class"
                                     Binding="{Binding Class.ClassName}" />
                 <DataGridTextColumn Header="Account Type"
-                                    Binding="{Binding AccountType}" />
+                                    Binding="{Binding Permission.Name}" />
             </DataGrid.Columns>
             <DataGrid.Resources>
                 <Style TargetType="{x:Type DataGridRow}">

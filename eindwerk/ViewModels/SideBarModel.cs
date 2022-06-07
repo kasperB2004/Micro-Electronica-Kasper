@@ -13,9 +13,9 @@ namespace eindwerk.ViewModels
     public class SideBarModel : ViewModelBase
     {
         private readonly AccountStore _accountStore;
-        public bool IsTeacher => _accountStore.IsTeacher;
+        public bool ViewContentManagent => _accountStore.ViewContentManagent;
 
-        public bool IsAdmin => _accountStore.IsAdmin;
+        public bool ViewAccountManagent => _accountStore.ViewAccountManagent;
         public ICommand NavigateHomeCommand{get;}
         public ICommand NavigateLearnCommand { get; }
         public ICommand NavigateAccountCommand { get; }
@@ -25,14 +25,14 @@ namespace eindwerk.ViewModels
         public ICommand NavigateAccountManagementCommand { get; }
 
 
-        public SideBarModel(AccountStore AccountStore, INavigationService<HomePageModel> homeNavigationService, INavigationService<LearnPageModel> LearnNavigationService,INavigationService<AccountPageModel> AccountNavigationService, INavigationService<LoginViewModel> LoginNavigationService, INavigationService<AccountManagementViewModel> AccountManagementnavigationService)
+        public SideBarModel(AccountStore AccountStore, INavigationService homeNavigationService, INavigationService LearnNavigationService,INavigationService AccountNavigationService, INavigationService LoginNavigationService, INavigationService AccountManagementnavigationService)
         {
             _accountStore = AccountStore;
-            NavigateHomeCommand = new NavigateCommand<HomePageModel>(homeNavigationService);
-            NavigateLearnCommand = new NavigateCommand<LearnPageModel>(LearnNavigationService);
-            NavigateAccountCommand = new NavigateCommand<AccountPageModel>(AccountNavigationService);
-            NavigateLogOutCommand = new NavigateCommand<LoginViewModel>(LoginNavigationService);
-            NavigateAccountManagementCommand = new NavigateCommand<AccountManagementViewModel>(AccountManagementnavigationService);
+            NavigateHomeCommand = new NavigateCommand(homeNavigationService);
+            NavigateLearnCommand = new NavigateCommand(LearnNavigationService);
+            NavigateAccountCommand = new NavigateCommand(AccountNavigationService);
+            NavigateLogOutCommand = new NavigateCommand(LoginNavigationService);
+            NavigateAccountManagementCommand = new NavigateCommand(AccountManagementnavigationService);
            CloseCommand = new CloseCommand();
         }
     }

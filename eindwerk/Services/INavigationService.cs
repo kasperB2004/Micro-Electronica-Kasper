@@ -2,7 +2,7 @@
 
 namespace eindwerk.Services
 {
-    public interface INavigationService<TviewModel> where TviewModel : ViewModelBase
+    public interface INavigationService
     {
         void Navigate();
     }

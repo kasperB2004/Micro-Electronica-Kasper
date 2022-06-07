@@ -5,6 +5,10 @@
     <TargetFramework>net6.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
+    <RepositoryType>git</RepositoryType>
+    <NeutralLanguage>en</NeutralLanguage>
+    <StartupObject></StartupObject>
+    <ApplicationIcon>guldensporen.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -12,13 +16,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="guldensporen.ico" />
     <Content Include="Media\logo.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Isopoh.Cryptography.Argon2" Version="1.1.11" />
+    <PackageReference Include="Isopoh.Cryptography.Argon2" Version="1.1.12" />
     <PackageReference Include="MaterialDesignColors" Version="2.0.6" />
     <PackageReference Include="MaterialDesignThemes" Version="4.5.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.5" />
@@ -34,6 +39,7 @@
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
     <PackageReference Include="MvvmScarletToolkit" Version="2.2.141" />
     <PackageReference Include="MvvmScarletToolkit.Wpf" Version="2.2.141" />
+    <PackageReference Include="SimpleModal.WPF" Version="1.0.0" />
   </ItemGroup>
 
 </Project>
