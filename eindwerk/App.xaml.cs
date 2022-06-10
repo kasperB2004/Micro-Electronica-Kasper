@@ -54,7 +54,7 @@ namespace eindwerk
                 db.AddRange(new Account
                 {
                     UserName = "Admin",
-                    Email = "admin@guldensporencollege.be",     
+                    Email = "admin",     
                     Permission = admin,
                     Class = Class2,
                     Password = Hashing.hash("1")

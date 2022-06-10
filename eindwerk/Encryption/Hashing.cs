@@ -72,5 +72,25 @@ namespace eindwerk.Encryption
             return false;
         }
         #endregion 
+
+        public static string PasswordGenerator()
+        {
+            IEnumerable<char> characterSet =
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
+        "abcdefghijklmnopqrstuvwxyz" +
+        "0123456789" +
+        "*$-+?_&=!%{}/";
+            var characterArray = characterSet.Distinct().ToArray();
+            var bytes = new byte[8 * 8];
+            RandomNumberGenerator rng = RandomNumberGenerator.Create();
+            rng.GetNonZeroBytes(bytes);
+            var result = new char[8];
+            for (int i = 0; i < 8; i++)
+            {
+                ulong value = BitConverter.ToUInt64(bytes, i * 8);
+                result[i] = characterArray[value % (uint)characterArray.Length];
+            }
+            return new string(result);
+        }
     }
 }
