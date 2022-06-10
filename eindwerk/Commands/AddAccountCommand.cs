@@ -84,7 +84,7 @@ namespace eindwerk.Commands
                 smtp.UseDefaultCredentials = false;
                 smtp.Host = "smtp-mail.outlook.com"; //for gmail host  
                 smtp.EnableSsl = true;
-                smtp.Credentials = new NetworkCredential("guldensporenstudyapp@outlook.com", "");
+                smtp.Credentials = new NetworkCredential("guldensporenstudyapp@outlook.com", "A123B456C");
                 smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
                 smtp.Send(message);
             }
