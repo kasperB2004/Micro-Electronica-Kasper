@@ -5,6 +5,7 @@ using eindwerk.Services;
 using eindwerk.Stores;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,10 +26,10 @@ namespace eindwerk.ViewModels
         public ICommand saveNewAccount { get; set; }
 
 
-        public AddAccountViewModel(INavigationService CloseModalNavigationService, INavigationService navigationService)
+        public AddAccountViewModel(AccountListStore _AccountListStore, INavigationService CloseModalNavigationService)
         {
             close = new NavigateCommand(CloseModalNavigationService);
-            saveNewAccount = new AddAccountCommand(this, navigationService);
+            saveNewAccount = new AddAccountCommand(this, CloseModalNavigationService , _AccountListStore);
             using (var Db = new Database())
             {
                 PermissionsList = Db.Permissions.ToList();

@@ -16,19 +16,25 @@ namespace eindwerk.ViewModels
 {
     public  class AccountManagementViewModel : ViewModelBase
     {
-        public List<Account> Accounts { get; set; }
+        public AccountListStore _AccountList { get; set; }
+        public ObservableCollection<Account> Accounts => _AccountList.Accounts;
         public Account SelectedItem { get; set; }
 
         public ICommand NavigateAddAccountCommand { get;}
 
-        public AccountManagementViewModel(NavigationStore navigationStore, INavigationService _NavigateAddAccount)
+        public AccountManagementViewModel(NavigationStore navigationStore, AccountListStore AccountListStore, INavigationService _NavigateAddAccount)
         {
+            _AccountList = AccountListStore;
             NavigateAddAccountCommand = new NavigateCommand(_NavigateAddAccount);
-            Accounts = new List<Account>();
+            filldatagrid();
+        }
+        private async void filldatagrid()
+        {
             using(var db = new Database())
             {
-                Accounts = db.Accounts.Include(c => c.Class).Include(p => p.Permission).ToList();
+                _AccountList.Accounts = new ObservableCollection<Account>(db.Accounts.Include(c => c.Class).Include(p => p.Permission));   
             }
+
         }
     }
 }

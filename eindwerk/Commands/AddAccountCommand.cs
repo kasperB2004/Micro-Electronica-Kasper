@@ -12,19 +12,22 @@ using eindwerk.Services;
 using System.Text.RegularExpressions;
 using System.Net.Mail;
 using System.Net;
+using eindwerk.Stores;
 
 namespace eindwerk.Commands
 {
     public class AddAccountCommand : CommandBase
     {
         public readonly AddAccountViewModel _viewModal;
+        public AccountListStore _AccountListStore;
         public readonly INavigationService _navigationService;
         private static string password; 
 
-        public AddAccountCommand(AddAccountViewModel viewModal, INavigationService navigationService)
+        public AddAccountCommand(AddAccountViewModel viewModal, INavigationService navigationService, AccountListStore AccountListStore)
         {
             _viewModal = viewModal;
             _navigationService = navigationService;
+            _AccountListStore = AccountListStore;
         }
 
         public override void Execute(object parameter)
@@ -64,7 +67,9 @@ namespace eindwerk.Commands
                     Password = Hashing.hash(password)
                 };
                 DB.Add(Account);
+                _AccountListStore.Accounts.Add(Account);
                 DB.SaveChanges();
+                
             }
 
 

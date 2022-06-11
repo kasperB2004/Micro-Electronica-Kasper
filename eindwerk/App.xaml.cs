@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using eindwerk.Models;
 using eindwerk.Encryption;
+using System.Collections.ObjectModel;
 
 namespace eindwerk
 {
@@ -23,12 +24,14 @@ namespace eindwerk
         private readonly NavigationStore _NavigationStore;
         private readonly ModalNavigationStore _ModalNavigationStore;
         private readonly AccountStore _AccountStore;
+        private readonly AccountListStore _AccountListStore;
         public App()
         {
             _ModalNavigationStore = new ModalNavigationStore();
             _NavigationStore = new NavigationStore();
             _AccountStore = new AccountStore();
-            using(var db = new Database())
+            _AccountListStore = new AccountListStore();
+            using (var db = new Database())
             {
 
                 db.Database.EnsureDeleted();
@@ -131,12 +134,11 @@ namespace eindwerk
         }
         public INavigationService CreateAddAccountNavigationService()
         {
-            return new ModalNavigationService<AddAccountViewModel>(_ModalNavigationStore, () => new AddAccountViewModel(CreateCloseModalNavigationService(),new CompositeNavigationService(CreateCloseModalNavigationService(), CreateAccountManagementNavigationService())));
+            return new ModalNavigationService<AddAccountViewModel>(_ModalNavigationStore, () => new AddAccountViewModel(_AccountListStore,CreateCloseModalNavigationService()));
         }
-
         private INavigationService CreateAccountManagementNavigationService()
         {
-            return new LayoutNavigationService<AccountManagementViewModel>(_NavigationStore, () => new AccountManagementViewModel(_NavigationStore,CreateAddAccountNavigationService()), CreateSideBarModel);
+            return new LayoutNavigationService<AccountManagementViewModel>(_NavigationStore, () => new AccountManagementViewModel(_NavigationStore, _AccountListStore, CreateAddAccountNavigationService()), CreateSideBarModel);
         }
 
     }
