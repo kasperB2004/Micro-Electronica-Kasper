@@ -49,6 +49,7 @@
                     Style="{StaticResource MaterialDesignPaperButton}"
                     Background="#1a1726"
                     Margin="10"
+                    Command="{Binding RemoveAccountCommand}"
                     ToolTip="Remove user"
                     BorderBrush="#f49402"
                     HorizontalAlignment="Left">
@@ -106,6 +107,7 @@
                   Background="#1a1726"
                   CanUserReorderColumns="True"
                   CanUserResizeColumns="False"
+                  SelectionMode="Single"
                   ItemsSource="{Binding Accounts}"
                   SelectedItem="{Binding SelectedItem}"
                   Foreground="White"

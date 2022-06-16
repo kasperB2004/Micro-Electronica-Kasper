@@ -21,11 +21,13 @@ namespace eindwerk.ViewModels
         public Account SelectedItem { get; set; }
 
         public ICommand NavigateAddAccountCommand { get;}
+        public ICommand RemoveAccountCommand { get; }
 
         public AccountManagementViewModel(NavigationStore navigationStore, AccountListStore AccountListStore, INavigationService _NavigateAddAccount)
         {
             _AccountList = AccountListStore;
             NavigateAddAccountCommand = new NavigateCommand(_NavigateAddAccount);
+            RemoveAccountCommand = new RemoveAccountCommand(this);
             filldatagrid();
         }
         private async void filldatagrid()
